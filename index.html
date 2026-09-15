@@ -58,7 +58,7 @@ kbd{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 
 .tagline{margin:18px auto 0;max-width:52ch;color:rgba(234,252,255,.85);font:700 16px/1.6 'Nunito';
   min-height:52px;transition:opacity .35s ease,transform .35s ease}
 .tagline.swap{opacity:0;transform:translateY(8px)}
-.searchbar{position:relative;display:flex;align-items:center;gap:12px;max-width:560px;margin:28px auto 0;
+.searchbar{position:relative;z-index:50;display:flex;align-items:center;gap:12px;max-width:560px;margin:28px auto 0;
   padding:14px 20px;border-radius:999px;background:rgba(5,34,48,.55);border:1px solid rgba(150,225,240,.22);
   backdrop-filter:blur(10px);transition:border-color .25s,box-shadow .25s}
 .searchbar:focus-within{border-color:rgba(95,227,242,.7);box-shadow:0 0 0 4px rgba(95,227,242,.12)}
@@ -69,9 +69,9 @@ kbd{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 
 .ping{position:absolute;inset:-5px;border:2px solid var(--bright);border-radius:50%;animation:ping 2.6s ease-out infinite;opacity:0}
 
 /* ---------- search suggestions ---------- */
-.suggest{position:absolute;left:0;right:0;top:calc(100% + 10px);z-index:40;border-radius:18px;overflow:hidden;
-  background:rgba(5,32,46,.97);border:1px solid rgba(150,225,240,.25);
-  box-shadow:0 24px 60px rgba(2,18,28,.6)}
+.suggest{position:absolute;left:0;right:0;top:calc(100% + 10px);z-index:60;border-radius:18px;overflow:hidden;
+  background:rgba(5,32,46,.98);border:1px solid rgba(150,225,240,.25);
+  box-shadow:0 24px 60px rgba(2,18,28,.7)}
 .suggest[hidden]{display:none}
 .sg-item{display:flex;align-items:center;gap:12px;width:100%;padding:9px 12px;background:none;border:0;
   cursor:pointer;text-align:left;transition:background .15s}
@@ -185,25 +185,27 @@ kbd{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 
 .meta p{display:flex;align-items:center;gap:6px;margin-top:6px;font:700 12px 'Nunito';color:rgba(234,252,255,.6)}
 .dot{width:3px;height:3px;border-radius:50%;background:rgba(234,252,255,.35)}
 
-/* ---------- apps deck ---------- */
-.apps-sec{margin:46px 0 0}
-.apps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px}
-@media(max-width:960px){.apps-grid{grid-template-columns:1fr}}
-.app-card{position:relative;border-radius:18px;background:rgba(5,32,46,.62);border:1px solid rgba(150,225,240,.14);
+/* ---------- app cards (inside the Apps modal) ---------- */
+.apps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+@media(max-width:680px){.apps-grid{grid-template-columns:1fr}}
+.app-card{position:relative;border-radius:16px;background:rgba(5,32,46,.62);border:1px solid rgba(150,225,240,.14);
   overflow:hidden;cursor:pointer;
   transition:transform .3s cubic-bezier(.2,.7,.3,1),border-color .3s,box-shadow .3s}
-.app-card:hover,.app-card:focus-visible{transform:translateY(-6px);border-color:rgba(255,209,102,.5);box-shadow:0 18px 38px rgba(2,18,28,.5)}
-.app-art{position:relative;aspect-ratio:16/7;overflow:hidden}
+.app-card:hover,.app-card:focus-visible{transform:translateY(-5px);border-color:rgba(255,209,102,.5);box-shadow:0 18px 38px rgba(2,18,28,.5)}
+.app-art{position:relative;aspect-ratio:16/8;overflow:hidden}
 .app-art canvas{position:absolute;inset:0;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.7,.3,1)}
 .app-card:hover .app-art canvas{transform:scale(1.06)}
-.app-body{padding:15px 18px 17px;display:flex;align-items:center;gap:12px;justify-content:space-between}
+.app-warn{position:absolute;left:10px;top:10px;z-index:2;padding:4px 10px;border-radius:999px;
+  font:800 10px 'Nunito';letter-spacing:.12em;text-transform:uppercase;
+  background:var(--coral);color:#3a120b}
+.app-body{padding:13px 15px 15px;display:flex;align-items:center;gap:10px;justify-content:space-between}
 .app-info{min-width:0}
-.app-info h3{font:400 20px 'Lilita One';color:var(--foam)}
-.app-info p{margin-top:3px;font:600 12.5px/1.45 'Nunito';color:rgba(234,252,255,.6);
+.app-info h3{font:400 18px 'Lilita One';color:var(--foam)}
+.app-info p{margin-top:2px;font:600 12px/1.45 'Nunito';color:rgba(234,252,255,.6);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.app-go{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+.app-go{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
   border:1.5px solid rgba(255,209,102,.6);color:var(--sun);transition:.25s}
-.app-go svg{width:15px;height:15px}
+.app-go svg{width:14px;height:14px}
 .app-card:hover .app-go{background:var(--sun);color:#3a2b10;border-color:var(--sun)}
 
 .reveal{opacity:0;transform:translateY(18px);
@@ -265,11 +267,11 @@ kbd{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 
 .frame-box:fullscreen .fs-bar{display:flex}
 @media(max-width:620px){.hide-s{display:none}.p-title h3{font-size:19px}.stage{padding:10px}}
 
-/* ---------- settings modal ---------- */
+/* ---------- modals ---------- */
 .overlay{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:22px;
   background:rgba(2,18,28,.62);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s}
 .overlay.open{opacity:1;pointer-events:auto}
-.modal{position:relative;width:min(600px,100%);max-height:86vh;overflow:auto;border-radius:22px;
+.modal{position:relative;width:min(640px,100%);max-height:86vh;overflow:auto;border-radius:22px;
   background:rgba(6,36,50,.96);border:1px solid rgba(150,225,240,.2);
   transform:translateY(26px) scale(.96);transition:transform .35s cubic-bezier(.2,.7,.3,1)}
 .overlay.open .modal{transform:none}
@@ -383,12 +385,6 @@ footer{padding:64px 30px 44px;text-align:center}
       </div>
     </section>
 
-    <section class="apps-sec" id="appsSec">
-      <h2 class="reef-title"><i data-lucide="app-window"></i>Tool Deck</h2>
-      <p class="set-sub" style="margin-top:6px">Full desktop apps, running right in the tab.</p>
-      <div class="apps-grid" id="appsGrid"></div>
-    </section>
-
     <section class="feat" id="feat">
       <div class="feat-art"><canvas id="featArt"></canvas><span class="tag" id="featTag"></span></div>
       <div class="feat-body">
@@ -474,6 +470,18 @@ footer{padding:64px 30px 44px;text-align:center}
   </div>
 </div>
 
+<!-- apps -->
+<div class="overlay" id="appsOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="appsTitle">
+    <button class="m-close" id="appsClose" aria-label="Close"><i data-lucide="x"></i></button>
+    <div class="m-body">
+      <h3 id="appsTitle">Tool Deck</h3>
+      <p class="set-sub">Full desktop apps, running right in the tab.</p>
+      <div class="apps-grid" id="appsGrid"></div>
+    </div>
+  </div>
+</div>
+
 <div class="toasts" id="toasts"></div>
 
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
@@ -493,7 +501,6 @@ function fmt(n){return n>=1e6?(n/1e6).toFixed(1).replace(".0","")+"M":((n/1e3)|0
 function icons(){try{lucide.createIcons()}catch(e){}}
 function rr(x,X,Y,Wd,Hd,rad){x.beginPath();x.moveTo(X+rad,Y);x.arcTo(X+Wd,Y,X+Wd,Y+Hd,rad);
   x.arcTo(X+Wd,Y+Hd,X,Y+Hd,rad);x.arcTo(X,Y+Hd,X,Y,rad);x.arcTo(X,Y,X+Wd,Y,rad);x.closePath()}
-/* storage that survives sandboxed about:blank contexts */
 function sGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function sSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 
@@ -501,159 +508,186 @@ function sSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 const HOST="https://metal.6d5ef1fdb68c5ab10b7c90f1796f711153.apexflightacademy.com";
 const CAT_HUE={Arcade:193,Puzzle:285,Rhythm:315,Party:345,Story:150,Horror:5,Sports:20,Strategy:210,Cozy:130,Idle:40,Retro:265};
 const GAMES=[
-{id:"minus3",title:"-3",cat:"Arcade",url:HOST+"/games/minus3/index.html",hue:210,motif:"glyph",plays:380000,rating:4.1,added:71,
+{id:"minus3",title:"-3",cat:"Arcade",url:HOST+"/games/minus3/index.html",hue:210,motif:"glyph",plays:380000,rating:4.1,added:82,
  blurb:"Three fathoms below zero. One of the minus-series deep cuts with a quiet cult following."},
-{id:"minusb",title:"-b",cat:"Arcade",url:HOST+"/games/minusbog/index.html",hue:262,motif:"glyph",plays:290000,rating:4.3,added:72,
+{id:"minusb",title:"-b",cat:"Arcade",url:HOST+"/games/minusbog/index.html",hue:262,motif:"glyph",plays:290000,rating:4.3,added:83,
  blurb:"The collection’s strangest label. Half the fun is finding out what the “b” stands for."},
-{id:"g1",title:"1",cat:"Arcade",url:HOST+"/games/1/index.html",hue:195,motif:"glyph",plays:410000,rating:4.2,added:70,
+{id:"g1",title:"1",cat:"Arcade",url:HOST+"/games/1/index.html",hue:195,motif:"glyph",plays:410000,rating:4.2,added:81,
  blurb:"The reef’s very first resident — no subtitle, no spoilers. Click in and find out what “1” is all about."},
-{id:"v1lol",title:"1v1.LOL",cat:"Arcade",url:HOST+"/gamefile/1v1.html",hue:160,motif:"blocks",plays:2200000,rating:4.5,added:73,
+{id:"v1lol",title:"1v1.LOL",cat:"Arcade",url:HOST+"/gamefile/1v1.html",hue:160,motif:"blocks",plays:2200000,rating:4.5,added:84,
  blurb:"Build, edit and outgun a single rival. Classic box-fight chaos — hop in, no waiting around."},
-{id:"tentd",title:"10 Minutes Till Dawn",cat:"Arcade",url:HOST+"/games/10minutestilldawn/index.html",hue:275,motif:"flashlight",plays:820000,rating:4.6,added:1,
+{id:"tentd",title:"10 Minutes Till Dawn",cat:"Arcade",url:HOST+"/games/10minutestilldawn/index.html",hue:275,motif:"flashlight",plays:820000,rating:4.6,added:12,
  blurb:"Survive ten minutes of mounting horror with one clip and perfectly timed reloads. Every upgrade hurts so good."},
-{id:"adgac",title:"A Difficult Game About Climbing",cat:"Arcade",url:HOST+"/gamefile/adgac.html",hue:35,motif:"climb",plays:520000,rating:4.4,added:42,
+{id:"adgac",title:"A Difficult Game About Climbing",cat:"Arcade",url:HOST+"/gamefile/adgac.html",hue:35,motif:"climb",plays:520000,rating:4.4,added:53,
  blurb:"One hammer, one mountain, infinite rage. A physics climbing ordeal where every inch gained can vanish in a blink."},
-{id:"academy",title:"Academy Tale",cat:"Story",port:"Webport",url:HOST+"/games/academytale/index.html",hue:130,motif:"heart",plays:340000,rating:4.7,added:74,
+{id:"academy",title:"Academy Tale",cat:"Story",port:"Webport",url:HOST+"/games/academytale/index.html",hue:130,motif:"heart",plays:340000,rating:4.7,added:85,
  blurb:"A fan-made story adventure, ported to the browser. Dialogue, choices and a surprising amount of heart."},
-{id:"amaze",title:"Amaze",cat:"Puzzle",url:HOST+"/games/amaze/index.html",hue:185,motif:"maze",plays:620000,rating:4.3,added:76,
+{id:"amaze",title:"Amaze",cat:"Puzzle",url:HOST+"/games/amaze/index.html",hue:185,motif:"maze",plays:620000,rating:4.3,added:87,
  blurb:"A clean, minimal maze-crawler that starts gentle and quietly eats your whole afternoon."},
-{id:"amongus",title:"Among Us",cat:"Party",port:"Local",url:HOST+"/games/amongus/index.html",hue:355,motif:"crew",plays:1900000,rating:4.6,added:75,
+{id:"amongus",title:"Among Us",cat:"Party",port:"Local",url:HOST+"/games/amongus/index.html",hue:355,motif:"crew",plays:1900000,rating:4.6,added:86,
  blurb:"The whole crew on one screen — pass-and-play deduction and sabotage, no internet lobby required."},
-{id:"acnl",title:"Animal Crossing",cat:"Cozy",port:"Webport",url:HOST+"/games/slider/index.html",hue:120,motif:"leaf",plays:890000,rating:4.8,added:57,
+{id:"acnl",title:"Animal Crossing",cat:"Cozy",port:"Webport",url:HOST+"/games/slider/index.html",hue:120,motif:"leaf",plays:890000,rating:4.8,added:68,
  blurb:"Your own island getaway, ported to the browser. Fish, decorate, and pay off a very patient raccoon’s mortgage."},
-{id:"angrybirds",title:"Angry Birds",cat:"Arcade",url:HOST+"/gamefile/Angrybirds.html",hue:5,motif:"bird",plays:2400000,rating:4.6,added:50,
+{id:"angrybirds",title:"Angry Birds",cat:"Arcade",url:HOST+"/gamefile/Angrybirds.html",hue:5,motif:"bird",plays:2400000,rating:4.6,added:61,
  blurb:"Flick, splat, repeat. The flock is back and the pigs’ architecture remains structurally unsound."},
-{id:"antonblast",title:"AntonBlast",cat:"Arcade",url:HOST+"/games/antonblast/runner.html",hue:355,motif:"hammer",plays:720000,rating:4.7,added:51,
+{id:"antonblast",title:"AntonBlast",cat:"Arcade",url:HOST+"/games/antonblast/runner.html",hue:355,motif:"hammer",plays:720000,rating:4.7,added:62,
  blurb:"Grab the happiest hammer in gaming and demolish entire levels — a riot of crashes, combos and pure destruction."},
-{id:"badparent",title:"Bad Parenting",cat:"Horror",url:HOST+"/games/bad/index.html",hue:20,motif:"door",plays:610000,rating:4.4,added:3,
+{id:"badparent",title:"Bad Parenting",cat:"Horror",url:HOST+"/games/bad/index.html",hue:20,motif:"door",plays:610000,rating:4.4,added:14,
  blurb:"A cozy little apartment, a very weird dad, and a night that goes terribly wrong. Indie horror with real teeth."},
-{id:"balatro",title:"Balatro",cat:"Puzzle",port:"Webport",url:HOST+"/games/balatro/index.html",hue:350,motif:"cards",plays:850000,rating:4.9,added:77,
+{id:"balatro",title:"Balatro",cat:"Puzzle",port:"Webport",url:HOST+"/games/balatro/index.html",hue:350,motif:"cards",plays:850000,rating:4.9,added:88,
  blurb:"Poker hands, joker synergies, numbers that go to the moon. The famous “one more run” machine."},
-{id:"baldis",title:"Baldi’s Basics",cat:"Horror",variant:"classic",url:HOST+"/games/baldis-basics/index.html",hue:145,motif:"baldi",plays:1300000,rating:4.5,added:69,
+{id:"baldis",title:"Baldi’s Basics",cat:"Horror",variant:"classic",url:HOST+"/games/baldis-basics/index.html",hue:145,motif:"baldi",plays:1300000,rating:4.5,added:80,
  blurb:"Collect all seven notebooks and get out before Baldi’s ruler catches up. Every wrong answer makes him faster."},
-{id:"bday",title:"Baldi’s Basics, Birthday Bash",cat:"Horror",variant:"bday",url:HOST+"/games/bday/index.html",hue:330,motif:"baldi",plays:650000,rating:4.2,added:68,
+{id:"bday",title:"Baldi’s Basics, Birthday Bash",cat:"Horror",variant:"bday",url:HOST+"/games/bday/index.html",hue:330,motif:"baldi",plays:650000,rating:4.2,added:79,
  blurb:"Surprise! Baldi is throwing a birthday sleepover and you are not on the guest list. Grab the presents and run."},
-{id:"bbcr",title:"Baldi’s Basics, Classic Remastered",cat:"Horror",variant:"remaster",url:HOST+"/games/BBCR/index.html",hue:45,motif:"baldi",plays:980000,rating:4.7,added:67,
+{id:"bbcr",title:"Baldi’s Basics, Classic Remastered",cat:"Horror",variant:"remaster",url:HOST+"/games/BBCR/index.html",hue:45,motif:"baldi",plays:980000,rating:4.7,added:78,
  blurb:"The cult classic, polished to a shine — same slap-slap-slap, crisper chalkboards, smoother chases."},
-{id:"bfs",title:"Baldi’s Fun New School",cat:"Horror",variant:"classic",url:HOST+"/games/bfs/",hue:165,motif:"baldi",plays:540000,rating:4.2,added:2,
+{id:"bfs",title:"Baldi’s Fun New School",cat:"Horror",variant:"classic",url:HOST+"/games/bfs/",hue:165,motif:"baldi",plays:540000,rating:4.2,added:13,
  blurb:"Baldi got a renovation. The school is “fun” now — the ruler says otherwise. Run anyway."},
-{id:"baseball",title:"Baseball Bros",cat:"Sports",url:HOST+"/games/baseballbros/index.html",hue:20,motif:"baseball",plays:1300000,rating:4.5,added:53,
+{id:"baldurs2",title:"Baldur's Gate 2",cat:"Strategy",url:HOST+"/games/baldurs-gate-2/index.html",hue:20,motif:"d20",plays:800000,rating:4.7,added:-11,
+ blurb:"The gold standard of CRPGs. Assemble a party, roll the dice, and maybe romance a vampire. Shadows of Amn await."},
+{id:"baseball",title:"Baseball Bros",cat:"Sports",url:HOST+"/games/baseballbros/index.html",hue:20,motif:"baseball",plays:1300000,rating:4.5,added:64,
  blurb:"Ragdoll diamond action with the bros. Time the swing, launch moonshots, argue with the ump forever."},
-{id:"basket",title:"Basket Random",cat:"Sports",url:HOST+"/games/basket-random/index.html",hue:35,motif:"ball",plays:1100000,rating:4.4,added:78,
+{id:"basket",title:"Basket Random",cat:"Sports",url:HOST+"/games/basket-random/index.html",hue:35,motif:"ball",plays:1100000,rating:4.4,added:89,
  blurb:"Two buttons, floppy ragdoll physics and hoops that make no sense. First to five wins the argument."},
-{id:"bartbash",title:"Bart Bash",cat:"Party",url:HOST+"/gamefile/bartbash.html",hue:48,motif:"bart",plays:980000,rating:4.3,added:52,
+{id:"bartbash",title:"Bart Bash",cat:"Party",url:HOST+"/gamefile/bartbash.html",hue:48,motif:"bart",plays:980000,rating:4.3,added:63,
  blurb:"Springfield’s finest throws down. Ay caramba — pick your fighter and brawl across the town."},
-{id:"bendy",title:"Bendy and the Ink Machine",cat:"Horror",url:HOST+"/games/bendy/index.html",hue:35,motif:"ink",plays:1100000,rating:4.4,added:54,
+{id:"bendy",title:"Bendy and the Ink Machine",cat:"Horror",url:HOST+"/games/bendy/index.html",hue:35,motif:"ink",plays:1100000,rating:4.4,added:65,
  blurb:"Back to the old animation studio. The cartoons down here stopped being funny a long time ago — mind the Ink Demon."},
-{id:"bitlife",title:"BitLife",cat:"Story",url:HOST+"/games/bitlife/index.html",hue:195,motif:"phone",plays:1500000,rating:4.5,added:4,
+{id:"bitlife",title:"BitLife",cat:"Story",url:HOST+"/games/bitlife/index.html",hue:195,motif:"phone",plays:1500000,rating:4.5,added:15,
  blurb:"Live an entire life in text — careers, crimes, marriages, regrets. Then live a better one. Repeat forever."},
-{id:"blockblast",title:"Block Blast",cat:"Puzzle",url:HOST+"/games/block-blast/index.html",hue:30,motif:"blocks",plays:2800000,rating:4.7,added:55,
+{id:"blockblast",title:"Block Blast",cat:"Puzzle",url:HOST+"/games/block-blast/index.html",hue:30,motif:"blocks",plays:2800000,rating:4.7,added:66,
  blurb:"Fit the pieces, clear the board, chase the combo. The 8×8 grid puzzle quietly eating everyone’s study hall."},
-{id:"btd6",title:"Bloons TD 6",cat:"Strategy",warn:"Laggy",url:HOST+"/games/btd6/index.html",hue:200,motif:"balloon",plays:1600000,rating:4.8,added:56,
+{id:"btd6",title:"Bloons TD 6",cat:"Strategy",warn:"Laggy",url:HOST+"/games/btd6/index.html",hue:200,motif:"balloon",plays:1600000,rating:4.8,added:67,
  blurb:"Monkeys, darts and waves upon waves of balloons — full tower-defense depth. Heads up: this one runs heavy."},
-{id:"bloxorz",title:"Bloxorz",cat:"Puzzle",url:HOST+"/games/bloxors/index.html",hue:200,motif:"isoblock",plays:780000,rating:4.5,added:43,
+{id:"bloxorz",title:"Bloxorz",cat:"Puzzle",url:HOST+"/games/bloxors/index.html",hue:200,motif:"isoblock",plays:780000,rating:4.5,added:54,
  blurb:"Roll the block, flip the switches, drop through the hole. The bridge-tipping puzzler that ate a generation of computer labs."},
-{id:"brotato2",title:"Brotato: Paws & Claws",cat:"Arcade",url:HOST+"/games/brotato2/index.html",hue:25,motif:"tato",plays:760000,rating:4.6,added:58,
+{id:"brotato2",title:"Brotato: Paws & Claws",cat:"Arcade",url:HOST+"/games/brotato2/index.html",hue:25,motif:"tato",plays:760000,rating:4.6,added:69,
  blurb:"A gun-toting potato versus alien hordes — now with furry friends in tow. Survive the waves, one shop at a time."},
-{id:"buckshot",title:"Buckshot Roulette",cat:"Horror",port:"Webport",url:HOST+"/games/buckshot/index.html",hue:355,motif:"shells",plays:820000,rating:4.5,added:59,
+{id:"buckshot",title:"Buckshot Roulette",cat:"Horror",port:"Webport",url:HOST+"/games/buckshot/index.html",hue:355,motif:"shells",plays:820000,rating:4.5,added:70,
  blurb:"Russian roulette against a smiling dealer, with a 12-gauge. Table stakes: your life. Not for the faint of heart."},
-{id:"capuchin",title:"Capuchin",cat:"Arcade",port:"Webport",url:HOST+"/games/CapuchinBog/index.html",hue:25,motif:"monkey",plays:430000,rating:4.5,added:41,
+{id:"capuchin",title:"Capuchin",cat:"Arcade",port:"Webport",url:HOST+"/games/CapuchinBog/index.html",hue:25,motif:"monkey",plays:430000,rating:4.5,added:52,
  blurb:"Swing, fling and scamper through lush levels as a very determined little monkey. Webport, hold the bananas."},
-{id:"celeste",title:"Celeste",cat:"Arcade",port:"Webport",warn:"Laggy",url:HOST+"/games/celeste/index.html",hue:320,motif:"summit",plays:980000,rating:4.9,added:5,
+{id:"caseoh",title:"Caseoh's Basics in Fast Food",cat:"Horror",port:"Webport",variant:"burger",url:HOST+"/gamefile/caseoh.html",hue:25,motif:"baldi",plays:1100000,rating:4.4,added:-10,
+ blurb:"Baldi’s formula, but every notebook is a burger and every hallway is a calorie. Run before he smells the fries."},
+{id:"celeste",title:"Celeste",cat:"Arcade",port:"Webport",warn:"Laggy",url:HOST+"/games/celeste/index.html",hue:320,motif:"summit",plays:980000,rating:4.9,added:16,
  blurb:"Climb the mountain, dash into the unknown, fail a thousand times. A masterpiece about anxiety — and strawberries."},
-{id:"c09",title:"Class of 09'",cat:"Story",port:"Webport",url:HOST+"/iframe.html?url=/games/C09/index.html",hue:330,motif:"cassette",plays:690000,rating:4.3,added:44,
+{id:"c09",title:"Class of 09'",cat:"Story",port:"Webport",url:HOST+"/iframe.html?url=/games/C09/index.html",hue:330,motif:"cassette",plays:690000,rating:4.3,added:55,
  blurb:"A razor-sharp visual novel about surviving high school in 2009. Choices, consequences, and zero role models."},
-{id:"cookie",title:"Cookie Clicker",cat:"Idle",url:HOST+"/games/cookie-clicker/index.html",hue:35,motif:"cookie",plays:2600000,rating:4.7,added:45,
+{id:"c09ru",title:"Class of 09' Reup",cat:"Story",url:HOST+"/games/C09RU/index.html",hue:320,motif:"cassette",variant:"reup",plays:580000,rating:4.3,added:-8,
+ blurb:"The remixed re-cut of the original — re-upped with extra scenes, extra endings and extra chaos."},
+{id:"c09fs",title:"Class of 09' The Flipside",cat:"Story",url:HOST+"/games/C09FS/index.html",hue:335,motif:"cassette",variant:"flip",plays:620000,rating:4.3,added:-9,
+ blurb:"Return to 2009 from the other side of the story. New routes, worse decisions, same razor wit."},
+{id:"cookie",title:"Cookie Clicker",cat:"Idle",url:HOST+"/games/cookie-clicker/index.html",hue:35,motif:"cookie",plays:2600000,rating:4.7,added:56,
  blurb:"Click a cookie. Hire grandmas. Ascend the universe. Question every choice you have ever made."},
-{id:"crazyballs",title:"Crazy Balls",cat:"Arcade",url:HOST+"/gamefile/balls.html",hue:265,motif:"ring",plays:540000,rating:4.2,added:60,
+{id:"crazyballs",title:"Crazy Balls",cat:"Arcade",url:HOST+"/gamefile/balls.html",hue:265,motif:"ring",plays:540000,rating:4.2,added:71,
  blurb:"Pure physics chaos — bounce, bump and smash through levels of increasingly unreasonable contraptions."},
-{id:"cattle3d",title:"Crazy Cattle 3D",cat:"Arcade",url:HOST+"/games/cattle3d/index.html",hue:100,motif:"cow",plays:1400000,rating:4.5,added:61,
+{id:"cattle3d",title:"Crazy Cattle 3D",cat:"Arcade",url:HOST+"/games/cattle3d/index.html",hue:100,motif:"cow",plays:1400000,rating:4.5,added:72,
  blurb:"You are an explosive, bouncy cow launched across low-poly islands. Physics battle royale, absolute nonsense."},
-{id:"cuphead",title:"Cuphead",cat:"Arcade",port:"Webport",url:HOST+"/games/Cuphead/index.html",hue:355,motif:"cup",plays:1700000,rating:4.9,added:62,
+{id:"cuphead",title:"Cuphead",cat:"Arcade",port:"Webport",url:HOST+"/games/Cuphead/index.html",hue:355,motif:"cup",plays:1700000,rating:4.9,added:73,
  blurb:"1930s cartoons meet brutal run-and-gun boss fights. Don’t deal with the devil — or do, and regret it beautifully."},
-{id:"deathrun",title:"Deathrun 3D",cat:"Arcade",url:HOST+"/games/death-run-3d/index.html",hue:270,motif:"grid",plays:610000,rating:4.3,added:63,
+{id:"deathrun",title:"Deathrun 3D",cat:"Arcade",url:HOST+"/games/death-run-3d/index.html",hue:270,motif:"grid",plays:610000,rating:4.3,added:74,
  blurb:"First-person sprints through trap corridors timed to flatten you. Memorize, sprint, survive."},
-{id:"deltarune",title:"Deltarune",cat:"Story",url:HOST+"/games/deltarune/index.html",hue:275,motif:"rune",plays:1900000,rating:4.9,added:64,
+{id:"deltarune",title:"Deltarune",cat:"Story",url:HOST+"/games/deltarune/index.html",hue:275,motif:"rune",plays:1900000,rating:4.9,added:75,
  blurb:"Toby Fox’s follow-up to Undertale. A dark world, a ragtag party, and choices that (maybe) don’t matter."},
-{id:"dice1m",title:"Dice a Million",cat:"Puzzle",port:"Webport",url:HOST+"/gamefile/diceamillion.html",hue:220,motif:"dice",plays:310000,rating:4.1,added:65,
+{id:"dice1m",title:"Dice a Million",cat:"Puzzle",port:"Webport",url:HOST+"/gamefile/diceamillion.html",hue:220,motif:"dice",plays:310000,rating:4.1,added:76,
  blurb:"Push-your-luck dice rolling — bank it or roll again? One more throw could be a million. Or nothing."},
-{id:"doom",title:"Doom",cat:"Retro",url:HOST+"/games/doom/index.html",hue:10,motif:"doom",plays:1500000,rating:4.8,added:46,
+{id:"doom",title:"Doom",cat:"Retro",url:HOST+"/games/doom/index.html",hue:10,motif:"doom",plays:1500000,rating:4.8,added:57,
  blurb:"The 1993 demon-blasting classic, running right in your tab. Knee-deep, and it never stopped."},
-{id:"driftboss",title:"Drift Boss",cat:"Arcade",url:HOST+"/games/drift-boss/index.html",hue:30,motif:"car",plays:1800000,rating:4.5,added:47,
+{id:"driftboss",title:"Drift Boss",cat:"Arcade",url:HOST+"/games/drift-boss/index.html",hue:30,motif:"car",plays:1800000,rating:4.5,added:58,
  blurb:"One button, tight corners, and a road that wants you gone. Drift the edges or fall forever."},
-{id:"drivemad",title:"Drive Mad",cat:"Arcade",url:HOST+"/games/drive-mad/index.html",hue:15,motif:"car",plays:2100000,rating:4.6,added:66,
+{id:"drivemad",title:"Drive Mad",cat:"Arcade",url:HOST+"/games/drive-mad/index.html",hue:15,motif:"car",plays:2100000,rating:4.6,added:77,
  blurb:"Reach the finish line without flipping your truck. Physics driving that gets more absurd every level."},
-{id:"escape",title:"Escape Road",cat:"Arcade",url:HOST+"/gamefile/escape.html",hue:215,motif:"chase",plays:1200000,rating:4.4,added:48,
+{id:"escape",title:"Escape Road",cat:"Arcade",url:HOST+"/gamefile/escape.html",hue:215,motif:"chase",plays:1200000,rating:4.4,added:59,
  blurb:"Sirens in the mirror. Floor it — outdrive the pursuit through an endless city before the road runs out."},
-{id:"escape3",title:"Escape Road 3",cat:"Arcade",url:HOST+"/gamefile/escape3.html",hue:230,motif:"chase",plays:900000,rating:4.4,added:6,
+{id:"escape3",title:"Escape Road 3",cat:"Arcade",url:HOST+"/gamefile/escape3.html",hue:230,motif:"chase",plays:900000,rating:4.4,added:17,
  blurb:"Third gear of the endless pursuit. New roads, new corners, same sirens — floor it and don’t look back."},
-{id:"fnac",title:"Five Nights at Candies",cat:"Horror",url:HOST+"/gamefile/fnac.html",hue:40,motif:"animatronic",plays:700000,rating:4.2,added:7,
+{id:"fez",title:"FEZ",cat:"Puzzle",port:"Webport",url:HOST+"/games/FEZ/index.html",hue:260,motif:"fez",plays:760000,rating:4.7,added:-7,
+ blurb:"Rotate the world 90 degrees at a time and watch impossible paths appear. A puzzle box wrapped in a love letter to games."},
+{id:"fnac",title:"Five Nights at Candies",cat:"Horror",url:HOST+"/gamefile/fnac.html",hue:40,motif:"animatronic",plays:700000,rating:4.2,added:18,
  blurb:"Candy the cat runs the late shift now. Same rules as always: watch the cameras, and don’t blink."},
-{id:"fnae",title:"Five Nights at Epsteins",cat:"Horror",url:HOST+"/gamefile/fnae.html",hue:0,motif:"animatronic",plays:950000,rating:4.1,added:49,
+{id:"fnae",title:"Five Nights at Epsteins",cat:"Horror",url:HOST+"/gamefile/fnae.html",hue:0,motif:"animatronic",plays:950000,rating:4.1,added:60,
  blurb:"Survive the night shift watching the cameras. The animatronics move when you blink. Five nights. Good luck."},
-{id:"fnaf1",title:"Five Nights at Freddy's",cat:"Horror",url:HOST+"/games/fnaf/index.html",hue:10,motif:"animatronic",plays:2400000,rating:4.8,added:8,
+{id:"fnaf1",title:"Five Nights at Freddy's",cat:"Horror",url:HOST+"/games/fnaf/index.html",hue:10,motif:"animatronic",plays:2400000,rating:4.8,added:19,
  blurb:"The one that started it all. Five nights, four animatronics, one very bad summer job at Freddy Fazbear’s."},
-{id:"fnaf2",title:"Five Nights at Freddy's 2",cat:"Horror",variant:"2",url:HOST+"/games/2/index.html",hue:200,motif:"animatronic",plays:1900000,rating:4.7,added:9,
+{id:"fnaf2",title:"Five Nights at Freddy's 2",cat:"Horror",variant:"2",url:HOST+"/games/2/index.html",hue:200,motif:"animatronic",plays:1900000,rating:4.7,added:20,
  blurb:"Prequel! Toy animatronics, no doors to hide behind, and a music box you must never, ever forget to wind."},
-{id:"fnaf3",title:"Five Nights at Freddy's 3",cat:"Horror",variant:"3",url:HOST+"/games/3/index.html",hue:130,motif:"animatronic",plays:1500000,rating:4.6,added:10,
+{id:"fnaf3",title:"Five Nights at Freddy's 3",cat:"Horror",variant:"3",url:HOST+"/games/3/index.html",hue:130,motif:"animatronic",plays:1500000,rating:4.6,added:21,
  blurb:"Thirty years later. One animatronic haunts the new horror attraction — and it’s already inside the vents."},
-{id:"fnaf4",title:"Five Nights at Freddy's 4",cat:"Horror",variant:"4",url:HOST+"/games/fnaf4/index.html",hue:275,motif:"animatronic",plays:1300000,rating:4.5,added:11,
+{id:"fnaf4",title:"Five Nights at Freddy's 4",cat:"Horror",variant:"4",url:HOST+"/games/fnaf4/index.html",hue:275,motif:"animatronic",plays:1300000,rating:4.5,added:22,
  blurb:"The bedroom. The closet. The flashlight. The worst game of hide-and-seek ever recorded. Listen closely."},
-{id:"fnafw",title:"Five Nights at Freddy's World",cat:"Party",variant:"W",url:HOST+"/games/fnw/index.html",hue:55,motif:"animatronic",plays:600000,rating:4.1,added:12,
+{id:"fnafw",title:"Five Nights at Freddy's World",cat:"Party",variant:"W",url:HOST+"/games/fnw/index.html",hue:55,motif:"animatronic",plays:600000,rating:4.1,added:23,
  blurb:"The creepy cast, but make it adorable. Turn-based RPG battles across a weird and wonderful Freddy-verse."},
-{id:"football",title:"Football Bros",cat:"Sports",url:HOST+"/games/footballbros/index.html",hue:95,motif:"pigskin",plays:1100000,rating:4.4,added:22,
+{id:"football",title:"Football Bros",cat:"Sports",url:HOST+"/games/footballbros/index.html",hue:95,motif:"pigskin",plays:1100000,rating:4.4,added:33,
  blurb:"Ragdoll gridiron with the bros. Throw deep, blitz hard, and blame the referee for everything."},
-{id:"fnfbop",title:"Friday Night Funkin': Bopcity",cat:"Rhythm",variant:"bopcity",url:HOST+"/games/fnf/bopcity.html",hue:45,motif:"fnf",plays:750000,rating:4.3,added:13,
+{id:"fnfbop",title:"Friday Night Funkin': Bopcity",cat:"Rhythm",variant:"bopcity",url:HOST+"/games/fnf/bopcity.html",hue:45,motif:"fnf",plays:750000,rating:4.3,added:24,
  blurb:"Cruise through Bop City dropping bars on every corner. Arrows up, volume up, stress down."},
-{id:"fnfapple",title:"Friday Night Funkin': Golden Apple",cat:"Rhythm",variant:"apple",url:HOST+"/games/fnf/goldenapple.html",hue:45,motif:"fnf",plays:700000,rating:4.4,added:15,
+{id:"fnfapple",title:"Friday Night Funkin': Golden Apple",cat:"Rhythm",variant:"apple",url:HOST+"/games/fnf/goldenapple.html",hue:45,motif:"fnf",plays:700000,rating:4.4,added:26,
  blurb:"A cursed golden apple and some of the hardest charts in the modded scene. Bring both hands. Maybe three."},
-{id:"fnfnonsense",title:"Friday Night Funkin': Nonsense",cat:"Rhythm",variant:"nonsense",url:HOST+"/games/fnf/nonsense.html",hue:55,motif:"fnf",plays:520000,rating:4.3,added:17,
+{id:"fnfnonsense",title:"Friday Night Funkin': Nonsense",cat:"Rhythm",variant:"nonsense",url:HOST+"/games/fnf/nonsense.html",hue:55,motif:"fnf",plays:520000,rating:4.3,added:28,
  blurb:"He literally speaks nonsense and still out-raps you. Deceptively brutal charts behind a blank yellow stare."},
-{id:"fnfshaggyxmatt",title:"Friday Night Funkin': Shaggy x Matt",cat:"Rhythm",variant:"glove",url:HOST+"/games/fnf/shaggyxmatt.html",hue:15,motif:"fnf",plays:650000,rating:4.4,added:19,
+{id:"fnfshaggyxmatt",title:"Friday Night Funkin': Shaggy x Matt",cat:"Rhythm",variant:"glove",url:HOST+"/games/fnf/shaggyxmatt.html",hue:15,motif:"fnf",plays:650000,rating:4.4,added:30,
  blurb:"Ultra-instinct Shaggy versus the boxing champion of Wii Sports. The crossover nobody expected, everybody needed."},
-{id:"fnfgarcello",title:"Friday Night Funkin': Vs Garcello",cat:"Rhythm",variant:"smoke",url:HOST+"/games/fnf/garcello.html",hue:130,motif:"fnf",plays:1400000,rating:4.8,added:14,
+{id:"fnfgarcello",title:"Friday Night Funkin': Vs Garcello",cat:"Rhythm",variant:"smoke",url:HOST+"/games/fnf/garcello.html",hue:130,motif:"fnf",plays:1400000,rating:4.8,added:25,
  blurb:"The chillest mod ever made. Vibe through Garcello’s laid-back week and try not to cry at the ending."},
-{id:"fnfmiku",title:"Friday Night Funkin': Vs Hatsune Miku",cat:"Rhythm",variant:"note",url:HOST+"/games/fnf/miku.html",hue:180,motif:"fnf",plays:1100000,rating:4.6,added:16,
+{id:"fnfmiku",title:"Friday Night Funkin': Vs Hatsune Miku",cat:"Rhythm",variant:"note",url:HOST+"/games/fnf/miku.html",hue:180,motif:"fnf",plays:1100000,rating:4.6,added:27,
  blurb:"The world’s first digital diva drops a chart on your boyfriend. Good luck keeping up with Miku’s tempo."},
-{id:"fnfshaggy",title:"Friday Night Funkin': Vs Shaggy",cat:"Rhythm",variant:"S",url:HOST+"/games/fnf/shaggy.html",hue:100,motif:"fnf",plays:1000000,rating:4.5,added:18,
+{id:"fnfshaggy",title:"Friday Night Funkin': Vs Shaggy",cat:"Rhythm",variant:"S",url:HOST+"/games/fnf/shaggy.html",hue:100,motif:"fnf",plays:1000000,rating:4.5,added:29,
  blurb:"Like, zoinks man — he’s only using 0.2% of his power and the arrows are already a blur."},
-{id:"fnftricky",title:"Friday Night Funkin': Vs Tricky",cat:"Rhythm",variant:"clown",url:HOST+"/games/fnf/tricky.html",hue:350,motif:"fnf",plays:1300000,rating:4.7,added:20,
+{id:"fnftricky",title:"Friday Night Funkin': Vs Tricky",cat:"Rhythm",variant:"clown",url:HOST+"/games/fnf/tricky.html",hue:350,motif:"fnf",plays:1300000,rating:4.7,added:31,
  blurb:"The MADNESS clown himself. Screaming siren head, impossible charts, zero chill. HI-A-AAH!"},
-{id:"gd",title:"Geometry Dash",cat:"Arcade",port:"Webport",url:HOST+"/gamefile/gd.html",hue:285,motif:"gd",plays:2000000,rating:4.6,added:21,
+{id:"gd",title:"Geometry Dash",cat:"Arcade",port:"Webport",url:HOST+"/gamefile/gd.html",hue:285,motif:"gd",plays:2000000,rating:4.6,added:32,
  blurb:"One tap, one spike, one rage quit. The rhythm platformer that defined an era — webported for your suffering."},
-{id:"goi",title:"Getting Over It",cat:"Arcade",port:"Webport",warn:"Long load",url:HOST+"/gamefile/goi.html",hue:30,motif:"climb",plays:870000,rating:4.3,added:23,
+{id:"goi",title:"Getting Over It",cat:"Arcade",port:"Webport",warn:"Long load",url:HOST+"/gamefile/goi.html",hue:30,motif:"climb",plays:870000,rating:4.3,added:34,
  blurb:"A man in a pot, a sledgehammer, and a mountain that exists purely to mock you. Long load, longer suffering."},
-{id:"gtag",title:"Gorilla Tag",cat:"Party",port:"Local",url:HOST+"/games/gtag/index.html",hue:110,motif:"monkey",plays:1300000,rating:4.6,added:24,
+{id:"gtag",title:"Gorilla Tag",cat:"Party",port:"Local",url:HOST+"/games/gtag/index.html",hue:110,motif:"monkey",plays:1300000,rating:4.6,added:35,
  blurb:"Tag, but you’re a gorilla slinging across a jungle gym with your arms. Legs are for quitters."},
-{id:"granny1",title:"Granny",cat:"Horror",url:HOST+"/gamefile/granny.html",hue:55,motif:"granny",plays:1800000,rating:4.3,added:29,
+{id:"granny1",title:"Granny",cat:"Horror",url:HOST+"/gamefile/granny.html",hue:55,motif:"granny",plays:1800000,rating:4.3,added:40,
  blurb:"You wake up in a locked house. Granny hears everything, and you have five days. Tip-toe. Carefully."},
-{id:"granny2",title:"Granny 2",cat:"Horror",variant:"2",url:HOST+"/gamefile/Granny%202.html",hue:40,motif:"granny",plays:1300000,rating:4.2,added:30,
+{id:"granny2",title:"Granny 2",cat:"Horror",variant:"2",url:HOST+"/gamefile/Granny%202.html",hue:40,motif:"granny",plays:1300000,rating:4.2,added:41,
  blurb:"Grandpa joined the family business. The house got bigger, the escape got meaner, the quiet got shorter."},
-{id:"granny3",title:"Granny 3",cat:"Horror",variant:"3",url:HOST+"/games/granny3/index.html",hue:20,motif:"granny",plays:1100000,rating:4.2,added:31,
+{id:"granny3",title:"Granny 3",cat:"Horror",variant:"3",url:HOST+"/games/granny3/index.html",hue:20,motif:"granny",plays:1100000,rating:4.2,added:42,
  blurb:"Slendrina’s grounds, both grandparents on patrol, one way out. The trilogy’s cruellest floor plan."},
-{id:"gta3",title:"GTA 3",cat:"Arcade",url:HOST+"/gamefile/gta3.html",hue:215,motif:"city",variant:"liberty",plays:1400000,rating:4.6,added:27,
+{id:"gta3",title:"GTA 3",cat:"Arcade",url:HOST+"/gamefile/gta3.html",hue:215,motif:"city",variant:"liberty",plays:1400000,rating:4.6,added:38,
  blurb:"Where 3D Liberty City began. Claude never says a word, but the traffic certainly has opinions."},
-{id:"gtasa",title:"GTA: San Andreas",cat:"Arcade",warn:"Long load",url:HOST+"/games/gtasan/index.html",hue:95,motif:"city",variant:"sa",plays:1800000,rating:4.7,added:26,
+{id:"gtasa",title:"GTA: San Andreas",cat:"Arcade",warn:"Long load",url:HOST+"/games/gtasan/index.html",hue:95,motif:"city",variant:"sa",plays:1800000,rating:4.7,added:37,
  blurb:"Ah shit, here we go again. San Andreas in your tab — the biggest heist is on your patience. Long load, worth it."},
-{id:"gtavc",title:"GTA: Vice City",cat:"Arcade",warn:"Long load",url:HOST+"/games/vicecity/index.html",hue:320,motif:"city",variant:"vice",plays:1700000,rating:4.7,added:25,
+{id:"gtavc",title:"GTA: Vice City",cat:"Arcade",warn:"Long load",url:HOST+"/games/vicecity/index.html",hue:320,motif:"city",variant:"vice",plays:1700000,rating:4.7,added:36,
  blurb:"Welcome to the 80s. Neon, palm trees, pastel suits and a whole city of trouble. Long load, big vibes."},
-{id:"hl1",title:"Half-Life",cat:"Retro",url:HOST+"/games/hl-main/index.html",hue:25,motif:"lambda",plays:1200000,rating:4.8,added:32,
+{id:"hl1",title:"Half-Life",cat:"Retro",url:HOST+"/games/hl-main/index.html",hue:25,motif:"lambda",plays:1200000,rating:4.8,added:43,
  blurb:"The lambda protocol, in your browser. An experiment goes wrong at Black Mesa. Rise and shine, Mr. Freeman."},
-{id:"hlof",title:"Half-Life: Opposing Force",cat:"Retro",variant:"of",url:HOST+"/gamefile/hlof.html",hue:90,motif:"lambda",plays:650000,rating:4.6,added:33,
+{id:"hlof",title:"Half-Life: Opposing Force",cat:"Retro",variant:"of",url:HOST+"/gamefile/hlof.html",hue:90,motif:"lambda",plays:650000,rating:4.6,added:44,
  blurb:"Corporal Shephard’s side of the Black Mesa incident. New weapons, weirder aliens, same terrible day."},
-{id:"hollow",title:"Hollow Knight",cat:"Arcade",port:"Webport",url:HOST+"/games/hollowknight/index.html",hue:210,motif:"knight",plays:1600000,rating:4.9,added:28,
+{id:"hollow",title:"Hollow Knight",cat:"Arcade",port:"Webport",url:HOST+"/games/hollowknight/index.html",hue:210,motif:"knight",plays:1600000,rating:4.9,added:39,
  blurb:"A tiny knight, a fallen bug kingdom, and some of the best bosses ever made. Git gud — gently."},
-{id:"hotline",title:"Hotline Miami",cat:"Arcade",url:HOST+"/games/whores/index.html",hue:320,motif:"miami",plays:950000,rating:4.7,added:34,
+{id:"hotline",title:"Hotline Miami",cat:"Arcade",url:HOST+"/games/whores/index.html",hue:320,motif:"miami",plays:950000,rating:4.7,added:45,
  blurb:"1989 Miami. Take the call, put on the mask, leave no witnesses. Neon-soaked, ultra-violent, unforgettable."},
-{id:"buddy",title:"Kick the Buddy",cat:"Arcade",port:"Webport",url:HOST+"/games/kickthebuddy/index.html",hue:200,motif:"buddy",plays:1000000,rating:4.2,added:35,
- blurb:"A ragdoll, an arsenal, and absolutely no consequences. The world’s most therapeutic punching bag."}
+{id:"buddy",title:"Kick the Buddy",cat:"Arcade",port:"Webport",url:HOST+"/games/kickthebuddy/index.html",hue:200,motif:"buddy",plays:1000000,rating:4.2,added:46,
+ blurb:"A ragdoll, an arsenal, and absolutely no consequences. The world’s most therapeutic punching bag."},
+{id:"lobcorp",title:"Lobotomy Corporation",cat:"Strategy",url:HOST+"/games/lobcorp/index.html",hue:350,motif:"lobcorp",plays:690000,rating:4.6,added:-6,
+ blurb:"Manage a facility of adorable abominations. Extract energy, contain breaches, sacrifice employees. Thank you, Manager."},
+{id:"madness",title:"Madness Accelerant",cat:"Arcade",url:HOST+"/gamefile/madnessaccelerant.html",hue:0,motif:"madness",plays:850000,rating:4.5,added:-5,
+ blurb:"Nevada’s bloodiest cameo-fest, cranked to eleven. Grunts, agents, and one very angry clown."},
+{id:"melon",title:"Melon Playground",cat:"Party",port:"Webport",url:HOST+"/games/melon-playground/index.html",hue:120,motif:"melon",plays:1400000,rating:4.4,added:-4,
+ blurb:"A physics sandbox with ragdolls, weapons, and absolutely no rules. The watermelon started it all."},
+{id:"miside",title:"MiSide",cat:"Horror",port:"Webport",url:HOST+"/gamefile/miside.html",hue:330,motif:"miside",plays:720000,rating:4.6,added:-3,
+ blurb:"A cozy dating sim with a girl named Mita. She’d really rather you didn’t leave the apartment. Ever."},
+{id:"nsmb",title:"New Super Mario Bros",cat:"Arcade",url:HOST+"/games/nsmb/index.html",hue:5,motif:"mario",plays:2200000,rating:4.8,added:-2,
+ blurb:"The DS classic that brought side-scrolling Mario roaring back. Mushrooms, mega mushrooms, and wall jumps."},
+{id:"raft",title:"Raft",cat:"Arcade",port:"Webport",url:HOST+"/games/raft/index.html",hue:195,motif:"raft",plays:950000,rating:4.5,added:-1,
+ blurb:"You, a plank of driftwood, and an endless ocean. Hook debris, build your float, and mind the shark."}
 ];
 
 /* ================= apps ================= */
 const APPS=[
-{id:"blender",name:"Blender",desc:"Full 3D creation suite — model, sculpt, render",url:HOST+"/tools/blender/index.html",motif:"blender"},
-{id:"firefox",name:"Firefox",desc:"A private browser, right in the tab",url:HOST+"/tools/firefox/index.html",motif:"firefox"},
-{id:"vita3k",name:"Vita3K",desc:"PlayStation Vita emulator",url:HOST+"/tools/vita3k/Vita3K.html",motif:"vita"}
+{id:"blender",name:"Blender",desc:"Full 3D creation suite — model, sculpt, render",
+ url:HOST+"/tools/blender/index.html",motif:"blender",warn:"Can crash website"},
+{id:"firefox",name:"Firefox",desc:"A private browser, right in the tab",
+ url:HOST+"/tools/firefox/index.html",motif:"firefox"},
+{id:"vita3k",name:"Vita3K",desc:"PlayStation Vita emulator",
+ url:HOST+"/tools/vita3k/Vita3K.html",motif:"vita"},
+{id:"soundboard",name:"Soundboard",desc:"Tap the pads, make some noise",
+ url:HOST+"/games/30dolar/index.html",motif:"soundboard"}
 ];
 const APP_MOTIFS={
 blender(x,w,h){
@@ -701,7 +735,29 @@ vita(x,w,h){
   x.beginPath();x.arc(bx-bw*.36,by+bh*.22,bh*.09,0,7);x.fill();
   x.beginPath();x.arc(bx+bw*.36,by+bh*.22,bh*.09,0,7);x.fill();
   x.fillStyle="#5fe3f2";x.font="800 "+(h*.11)+"px 'Nunito',sans-serif";x.textAlign="center";
-  x.fillText("Vita3K",bx,by+bh*.62)}
+  x.fillText("Vita3K",bx,by+bh*.62)},
+soundboard(x,w,h){
+  const g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,"#15151f");g.addColorStop(1,"#090910");
+  x.fillStyle=g;x.fillRect(0,0,w,h);
+  x.fillStyle="rgba(255,255,255,.06)";x.fillRect(w*.08,h*.12,w*.4,h*.06);
+  x.fillStyle="#ff3b5c";x.beginPath();x.arc(w*.15,h*.15,h*.035,0,7);x.fill();
+  const cols=["#ff6b57","#ffd166","#5fe3f2","#9dff8a","#ff8ad1","#b28aff"];
+  const pw=w*.13,ph=h*.4,gap=w*.02,ox=w*.22,oy=h*.36;
+  for(let r=0;r<2;r++)for(let c=0;c<3;c++){
+    const px=ox+c*(pw+gap*2),py=oy+r*(ph+h*.1);
+    x.fillStyle=cols[r*3+c];
+    rr(x,px,py,pw,ph,h*.06);x.fill();
+    x.fillStyle="rgba(255,255,255,.22)";
+    rr(x,px+3,py+3,pw-6,h*.07,h*.05);x.fill();
+  }
+  x.strokeStyle="rgba(255,255,255,.14)";x.lineWidth=2;x.lineCap="round";
+  x.beginPath();x.moveTo(w*.8,h*.3);
+  x.quadraticCurveTo(w*.87,h*.34,w*.87,h*.5);
+  x.quadraticCurveTo(w*.87,h*.66,w*.8,h*.7);x.stroke();
+  for(let i=0;i<3;i++){const a=(i-1)*.5;
+    x.beginPath();x.moveTo(w*.8,h*.5);
+    x.lineTo(w*.8+Math.cos(a-Math.PI/2)*h*.07,h*.5+Math.sin(a-Math.PI/2)*h*.07);x.stroke()}
+}
 };
 function drawAppArt(cv,a){
   const w=cv.clientWidth||320,h=cv.clientHeight||140;
@@ -709,10 +765,15 @@ function drawAppArt(cv,a){
   const x=cv.getContext("2d");x.setTransform(DPR,0,0,DPR,0,0);
   APP_MOTIFS[a.motif](x,w,h);
 }
+function launchApp(a){
+  openPlayer({title:a.name,cat:"App",url:a.url,warn:a.warn});
+}
 function renderApps(){
   $("#appsGrid").innerHTML=APPS.map(a=>
    '<article class="app-card" tabindex="0" role="button" aria-label="Launch '+a.name+'" data-app="'+a.id+'">'
-   +'<div class="app-art"><canvas></canvas></div>'
+   +'<div class="app-art"><canvas></canvas>'
+   +(a.warn?'<span class="app-warn">'+a.warn+'</span>':'')
+   +'</div>'
    +'<div class="app-body"><div class="app-info"><h3>'+a.name+'</h3><p>'+a.desc+'</p></div>'
    +'<span class="app-go"><i data-lucide="play"></i></span></div></article>').join("");
   $("#appsGrid").querySelectorAll(".app-card").forEach(card=>{
@@ -720,14 +781,17 @@ function renderApps(){
     drawAppArt(card.querySelector("canvas"),a)});
   icons();
 }
+const appsOverlay=$("#appsOverlay");
  $("#appsGrid").addEventListener("click",e=>{
   const c=e.target.closest(".app-card");if(!c)return;
-  const a=APPS.find(k=>k.id===c.dataset.app);if(a)openPlayer({title:a.name,cat:"App",url:a.url})});
+  const a=APPS.find(k=>k.id===c.dataset.app);if(a)launchApp(a)});
  $("#appsGrid").addEventListener("keydown",e=>{
   if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("app-card")){
     e.preventDefault();
-    const a=APPS.find(k=>k.id===e.target.dataset.app);if(a)openPlayer({title:a.name,cat:"App",url:a.url})}});
- $("#appsBtn").addEventListener("click",()=>$("#appsSec").scrollIntoView({behavior:"smooth"}));
+    const a=APPS.find(k=>k.id===e.target.dataset.app);if(a)launchApp(a)}});
+ $("#appsBtn").addEventListener("click",()=>appsOverlay.classList.add("open"));
+ $("#appsClose").addEventListener("click",()=>appsOverlay.classList.remove("open"));
+appsOverlay.addEventListener("click",e=>{if(e.target===appsOverlay)appsOverlay.classList.remove("open")});
 
 /* ================= wordmark & wave path ================= */
 (function(){
@@ -769,6 +833,196 @@ function wash(x,w,h,p){
   x.fillStyle=r;x.fillRect(0,0,w,h);
 }
 const MOTIFS={
+d20(x,w,h,p,R){wash(x,w,h,p);
+  x.fillStyle="rgba(10,6,4,.72)";x.fillRect(0,0,w,h);
+  const cx=w*.5,cy=h*.52,s=h*.3;
+  const pts=[];
+  for(let i=0;i<6;i++){const a=Math.PI/6+i*Math.PI/3;
+    pts.push([cx+Math.cos(a)*s,cy+Math.sin(a)*s])}
+  x.fillStyle="rgba(255,255,255,.1)";
+  x.beginPath();pts.forEach((pt,i)=>i?x.lineTo(pt[0],pt[1]):x.moveTo(pt[0],pt[1]));
+  x.closePath();x.fill();
+  x.strokeStyle=p.a;x.lineWidth=3.5;x.lineJoin="round";x.stroke();
+  for(let i=0;i<6;i++){
+    const nx=pts[(i+1)%6];
+    x.strokeStyle="rgba(255,255,255,.28)";x.lineWidth=1.5;
+    x.beginPath();x.moveTo(pts[i][0],pts[i][1]);x.lineTo(nx[0],nx[1]);x.lineTo(cx,cy-h*.08);x.closePath();x.stroke()}
+  x.strokeStyle=p.b;x.lineWidth=2;
+  x.beginPath();x.moveTo(cx-s*.5,cy+s*.38);x.lineTo(cx+s*.5,cy+s*.38);x.stroke();
+  x.textAlign="center";x.font="400 "+(h*.24)+"px 'Lilita One','Arial Black',sans-serif";
+  x.fillStyle=p.c;x.fillText("20",cx,cy)},
+fez(x,w,h,p,R){wash(x,w,h,p);
+  x.fillStyle="rgba(8,5,20,.75)";x.fillRect(0,0,w,h);
+  for(let i=0;i<18;i++){x.fillStyle="rgba(255,255,255,"+(.2+((i*31)%8)/24)+")";
+    x.fillRect((i*113)%w,(i*67)%h,1.5,1.5)}
+  const cx=w*.5,cy=h*.56,s=h*.2;
+  function face(pts,col){
+    x.fillStyle=col;x.beginPath();
+    pts.forEach((pt,i)=>i?x.lineTo(pt[0],pt[1]):x.moveTo(pt[0],pt[1]));
+    x.closePath();x.fill();
+    x.strokeStyle="rgba(0,0,0,.35)";x.lineWidth=2;x.stroke()}
+  const T=[cx,cy-s*1.15],L=[cx-s*1.15,cy-s*.5],Rt=[cx+s*1.15,cy-s*.5],
+        B=[cx,cy+s*.15],BL=[cx-s*1.15,cy+s*.85],BR=[cx+s*1.15,cy+s*.85];
+  x.fillStyle="hsl(45 70% 38%)";
+  x.beginPath();x.moveTo(L[0],L[1]);x.lineTo(B[0],B[1]);x.lineTo(BL[0],BL[1]);x.lineTo(BL[0],BL[1]-s*.7);x.closePath();x.fill();
+  face([B,Rt,BR,BL],"hsl(45 75% 48%)");
+  face([T,Rt,B,[cx,cy-s*.5]],"hsl(48 85% 62%)");
+  face([T,L,B,[cx,cy-s*.5]],"hsl(45 80% 52%)");
+  x.fillStyle="rgba(0,0,0,.25)";
+  [[-.55,-.1],[.15,.15],[.45,-.15]].forEach(q=>{
+    x.fillRect(cx+q[0]*s,cy+q[1]*s+s*.3,s*.28,s*.28)});
+  x.fillStyle="rgba(0,0,0,.2)";
+  [[-.5,.05],[.2,.3],[-.15,.32]].forEach(q=>x.fillRect(cx+q[0]*s-s*.14,cy-s*.5+q[1]*s,s*.26,s*.26));
+  x.strokeStyle=p.a;x.lineWidth=2;x.setLineDash([6,8]);
+  x.beginPath();x.arc(cx,cy-s*.1,s*1.5,0,7);x.stroke();x.setLineDash([])},
+lobcorp(x,w,h,p,R){wash(x,w,h,p);
+  x.fillStyle="rgba(10,4,8,.8)";x.fillRect(0,0,w,h);
+  x.fillStyle="rgba(255,255,255,.06)";
+  for(let i=0;i<7;i++)x.fillRect(0,h*(.12+i*.13),w,2);
+  const bx=w*.5,by=h*.52,bw=h*.56,bh=h*.8;
+  x.fillStyle="#1a1218";rr(x,bx-bw/2,by-bh/2,bw,bh,bw*.3);x.fill();
+  x.strokeStyle="rgba(255,120,120,.35)";x.lineWidth=2.5;rr(x,bx-bw/2,by-bh/2,bw,bh,bw*.3);x.stroke();
+  const cg=x.createLinearGradient(bx-bw/2,by,bx+bw/2,by);
+  cg.addColorStop(0,"rgba(120,140,160,.16)");cg.addColorStop(.5,"rgba(190,210,230,.3)");
+  cg.addColorStop(1,"rgba(120,140,160,.16)");
+  x.fillStyle=cg;rr(x,bx-bw/2,by-bh/2,bw,bh,bw*.3);x.fill();
+  const ex=bx,ey=by;
+  x.fillStyle="#f2f6fa";x.beginPath();x.ellipse(ex,ey,bw*.36,bh*.3,0,0,7);x.fill();
+  x.fillStyle="#e0453a";x.beginPath();x.arc(ex,ey,bh*.14,0,7);x.fill();
+  x.fillStyle="#1a0508";x.beginPath();x.ellipse(ex,ey,bh*.035,bh*.1,0,0,7);x.fill();
+  x.fillStyle="#fff";x.beginPath();x.arc(ex-bh*.05,ey-bh*.05,h*.015,0,7);x.fill();
+  x.fillStyle="#ffd166";
+  for(let i=0;i<5;i++){x.save();x.translate(bx-bw*.36,by-bh*.42+i*6);
+    x.rotate(-.5);x.fillRect(0,0,10,3.5);x.restore()}
+  x.font="800 "+(h*.07)+"px 'Nunito',sans-serif";x.textAlign="center";
+  x.fillStyle="rgba(255,180,180,.85)";x.fillText("ZAYIN — SAFE",bx,by+bh*.62)},
+madness(x,w,h,p,R){wash(x,w,h,p);
+  const g=x.createLinearGradient(0,0,0,h);
+  g.addColorStop(0,"#3d0a0a");g.addColorStop(1,"#160202");
+  x.fillStyle=g;x.fillRect(0,0,w,h);
+  for(let i=0;i<14;i++){x.fillStyle="rgba(255,220,180,"+(.05+((i*17)%6)/60)+")";
+    x.fillRect(0,h*(.08+i*.065),w,1.5)}
+  const cx=w*.5,cy=h*.5,s=h*.21;
+  x.fillStyle="#9aa1a8";x.beginPath();x.arc(cx,cy,s,0,7);x.fill();
+  x.strokeStyle="rgba(30,20,20,.6)";x.lineWidth=2.5;x.stroke();
+  x.fillStyle="#b8bec4";
+  x.beginPath();x.moveTo(cx-s*.28,cy-s*.55);x.quadraticCurveTo(cx,cy-s*.9,cx+s*.28,cy-s*.55);x.closePath();x.fill();
+  x.fillStyle="#c22020";
+  x.fillRect(cx-s*.07,cy-s*.55,s*.14,s*1.1);
+  x.fillRect(cx-s*.55,cy-s*.07,s*1.1,s*.14);
+  x.fillStyle="rgba(255,255,255,.85)";
+  x.beginPath();x.arc(w*.17,h*.66,h*.045,0,7);x.fill();
+  x.beginPath();x.arc(w*.83,h*.66,h*.045,0,7);x.fill();
+  x.strokeStyle="rgba(255,240,220,.5)";x.lineWidth=2;
+  x.beginPath();x.moveTo(w*.24,h*.36);x.lineTo(w*.34,h*.33);x.moveTo(w*.24,h*.41);x.lineTo(w*.33,h*.41);x.stroke();
+  x.beginPath();x.moveTo(w*.76,h*.36);x.lineTo(w*.66,h*.33);x.moveTo(w*.76,h*.41);x.lineTo(w*.67,h*.41);x.stroke()},
+melon(x,w,h,p,R){wash(x,w,h,p);
+  const sk=x.createLinearGradient(0,0,0,h);
+  sk.addColorStop(0,"#bfe9ff");sk.addColorStop(1,"#8fd0f2");
+  x.fillStyle=sk;x.fillRect(0,0,w,h);
+  x.fillStyle="#7cb85c";x.fillRect(0,h*.78,w,h*.22);
+  const cx=w*.5,cy=h*.6,r=h*.34;
+  x.fillStyle="#3f7d33";
+  x.beginPath();x.arc(cx,cy,r,Math.PI,0);x.closePath();x.fill();
+  x.fillStyle="#8fce6a";
+  x.beginPath();x.arc(cx,cy,r*.94,Math.PI,0);x.closePath();x.fill();
+  x.fillStyle="#e5534b";
+  x.beginPath();x.arc(cx,cy+3,r*.8,Math.PI,0);x.closePath();x.fill();
+  x.fillStyle="#241a12";
+  [[-.4,-.35],[0,-.5],[.4,-.35],[-.2,-.15],[.2,-.18],[0,-.28]].forEach(sd=>{
+    x.beginPath();x.ellipse(cx+sd[0]*r,cy+sd[1]*r*.5-3,r*.045,r*.075,.3,0,7);x.fill()});
+  x.font="800 "+(h*.08)+"px 'Nunito',sans-serif";x.textAlign="center";
+  x.fillStyle="rgba(10,30,20,.65)";x.fillText("PHYSICS SANDBOX",cx,h*.92)},
+miside(x,w,h,p,R){wash(x,w,h,p);
+  x.fillStyle="#1a0f14";x.fillRect(0,0,w,h);
+  for(let i=0;i<9;i++){
+    x.fillStyle="rgba(255,120,180,"+(.06+((i*13)%7)/60)+")";
+    x.fillRect(0,h*(.06+i*.1)+((i%2)?4:-4),w,2.5)}
+  const cx=w*.5,cy=h*.56,s=h*.17;
+  x.fillStyle="#f7d9e8";
+  x.beginPath();x.arc(cx-s*1.05,cy-s*.3,s*.42,0,7);x.fill();
+  x.beginPath();x.arc(cx+s*1.05,cy-s*.3,s*.42,0,7);x.fill();
+  x.fillStyle="#e88ab8";
+  x.beginPath();x.arc(cx-s*1.05,cy-s*.3,s*.28,0,7);x.fill();
+  x.beginPath();x.arc(cx+s*1.05,cy-s*.3,s*.28,0,7);x.fill();
+  x.fillStyle="#f7d9e8";x.beginPath();x.ellipse(cx,cy-s*.35,s*.55,s*.4,0,0,7);x.fill();
+  x.fillStyle="#ffe9f2";
+  x.beginPath();x.ellipse(cx,cy+s*.15,s*.62,s*.62,0,0,7);x.fill();
+  x.strokeStyle="rgba(160,80,120,.4)";x.lineWidth=2;x.stroke();
+  x.fillStyle="#3a2030";
+  x.beginPath();x.ellipse(cx-s*.24,cy-s*.02,s*.09,s*.13,0,0,7);x.fill();
+  x.save();x.translate(cx+s*.24,cy-s*.02);
+  x.fillStyle="#3a2030";
+  x.fillRect(-s*.09,-s*.11,s*.18,s*.2);
+  x.fillStyle="#5fe3f2";x.fillRect(-s*.09,-s*.02,s*.18,s*.05);
+  x.restore();
+  x.strokeStyle="#3a2030";x.lineWidth=2.5;x.lineCap="round";
+  x.beginPath();x.arc(cx,cy+s*.3,s*.16,.3,Math.PI-.3);x.stroke();
+  x.fillStyle="rgba(255,60,120,.4)";
+  x.fillRect(0,cy+s*.52,w,h*.03);
+  x.fillStyle="#ff5fa0";x.font="800 "+(h*.08)+"px 'Nunito',sans-serif";x.textAlign="center";
+  x.fillText("M I T A",w*.5,h*.93)},
+mario(x,w,h,p,R){wash(x,w,h,p);
+  x.fillStyle="#5c94fc";x.fillRect(0,0,w,h);
+  x.fillStyle="#f8f8f8";
+  x.beginPath();x.arc(w*.2,h*.24,h*.07,0,7);x.arc(w*.27,h*.22,h*.055,0,7);x.fill();
+  x.beginPath();x.arc(w*.85,h*.16,h*.05,0,7);x.fill();
+  x.fillStyle="#5c9c3c";x.fillRect(0,h*.8,w,h*.2);
+  x.fillStyle="#487c30";x.fillRect(0,h*.8,w,h*.03);
+  const cx=w*.5,cy=h*.52,s=h*.2;
+  x.fillStyle="#f8e0b0";
+  rr(x,cx-s*.5,cy+s*.1,s,s*.5,s*.14);x.fill();
+  x.strokeStyle="rgba(120,80,40,.4)";x.lineWidth=2;
+  rr(x,cx-s*.5,cy+s*.1,s,s*.5,s*.14);x.stroke();
+  x.fillStyle="#e03c28";
+  x.beginPath();x.arc(cx,cy,s*.9,Math.PI,0);
+  x.quadraticCurveTo(cx+s*.9,cy+s*.22,cx+s*.5,cy+s*.14);
+  x.lineTo(cx-s*.5,cy+s*.14);
+  x.quadraticCurveTo(cx-s*.9,cy+s*.22,cx,cy);
+  x.closePath();x.fill();
+  x.strokeStyle="rgba(120,20,10,.45)";x.lineWidth=2.5;x.stroke();
+  x.fillStyle="#fff";
+  x.beginPath();x.arc(cx-s*.45,cy-s*.3,s*.22,0,7);x.fill();
+  x.beginPath();x.arc(cx+s*.45,cy-s*.3,s*.22,0,7);x.fill();
+  x.beginPath();x.arc(cx,cy-s*.62,s*.2,0,7);x.fill();
+  x.beginPath();x.arc(cx-s*.25,cy+s*.02,s*.12,0,7);x.fill();
+  x.beginPath();x.arc(cx+s*.25,cy+s*.02,s*.12,0,7);x.fill();
+  x.fillStyle="#241a12";
+  x.beginPath();x.ellipse(cx-s*.2,cy+s*.32,s*.05,s*.09,0,0,7);x.fill();
+  x.beginPath();x.ellipse(cx+s*.2,cy+s*.32,s*.05,s*.09,0,0,7);x.fill()},
+raft(x,w,h,p,R){wash(x,w,h,p);
+  const sk=x.createLinearGradient(0,0,0,h);
+  sk.addColorStop(0,"#9fd8f0");sk.addColorStop(.55,"#5fb6dd");
+  sk.addColorStop(.56,"#1a6f9e");sk.addColorStop(1,"#0d4a70");
+  x.fillStyle=sk;x.fillRect(0,0,w,h);
+  x.strokeStyle="rgba(255,255,255,.5)";x.lineWidth=2.5;x.lineCap="round";
+  for(let i=0;i<5;i++){const wy=h*(.62+i*.08);
+    x.beginPath();
+    for(let px2=-10;px2<=w+10;px2+=20){
+      const y=wy+Math.sin(px2*.05+i*2)*3;
+      px2<=-10+1?x.moveTo(px2,y):x.lineTo(px2,y)}
+    x.stroke()}
+  const rx=w*.5,ry=h*.66,plankW=w*.09;
+  for(let i=-2;i<=2;i++){
+    x.fillStyle=i%2?"#a06c3e":"#8a5a30";
+    x.save();x.translate(rx+i*plankW*.95,ry);x.rotate(-.04*i);
+    rr(x,-plankW/2,-h*.05,plankW,h*.1,3);x.fill();
+    x.strokeStyle="rgba(60,36,16,.5)";x.lineWidth=1.5;rr(x,-plankW/2,-h*.05,plankW,h*.1,3);x.stroke();
+    x.restore()}
+  x.strokeStyle="#5c3a1e";x.lineWidth=4;
+  x.beginPath();x.moveTo(rx,ry-h*.05);x.lineTo(rx,ry-h*.32);x.stroke();
+  x.fillStyle="#f2e9d8";
+  x.beginPath();x.moveTo(rx+3,ry-h*.32);x.lineTo(rx+w*.16,ry-h*.24);x.lineTo(rx+3,ry-h*.16);x.closePath();x.fill();
+  x.strokeStyle="rgba(120,90,60,.5)";x.lineWidth=1.5;x.stroke();
+  x.strokeStyle="#c9d4da";x.lineWidth=2;
+  x.beginPath();x.moveTo(rx-w*.2,ry-h*.06);
+  x.quadraticCurveTo(rx-w*.3,ry-h*.28,rx-w*.22,ry-h*.42);x.stroke();
+  x.strokeStyle="#7fb0c8";x.lineWidth=1.5;
+  x.beginPath();x.arc(rx-w*.22,ry-h*.44,h*.03,0,7);x.stroke();
+  const finX=w*.16,finY=h*.84;
+  x.fillStyle="#4a6a7a";
+  x.beginPath();x.moveTo(finX,finY);x.quadraticCurveTo(finX+w*.02,finY-h*.07,finX+w*.05,finY-h*.02);
+  x.quadraticCurveTo(finX+w*.03,finY,finX+w*.06,finY+h*.02);x.lineTo(finX,finY+h*.02);x.closePath();x.fill()},
 flashlight(x,w,h,p,R){wash(x,w,h,p);
   x.fillStyle="rgba(2,6,12,.74)";x.fillRect(0,0,w,h);
   const cx=w*.2,cy=h*.82;
@@ -1107,8 +1361,8 @@ isoblock(x,w,h,p,R){wash(x,w,h,p);
   x.beginPath();x.moveTo(px,py-bh-u*.5);x.lineTo(px+u,py-bh);x.lineTo(px,py-bh+u*.5);x.lineTo(px-u,py-bh);x.closePath();x.fill();
   x.strokeStyle="rgba(120,70,10,.5)";x.lineWidth=2;
   x.beginPath();x.moveTo(px-u,py-bh);x.lineTo(px-u,py);x.lineTo(px,py+u*.5);x.lineTo(px+u,py);x.lineTo(px+u,py-bh);x.stroke()},
-cassette(x,w,h,p,R){wash(x,w,h,p);
-  const cx=w*.5,cy=h*.56,cw=h*.66,ch=cw*.64;
+cassette(x,w,h,p,R,g){wash(x,w,h,p);
+  const cx=w*.5,cy=h*.52,cw=h*.66,ch=cw*.64;
   x.save();x.translate(cx,cy);x.rotate(-.05);
   x.shadowColor="rgba(2,16,24,.4)";x.shadowBlur=14;x.shadowOffsetY=6;
   x.fillStyle="#f2a0be";rr(x,-cw/2,-ch/2,cw,ch,ch*.14);x.fill();
@@ -1131,9 +1385,16 @@ cassette(x,w,h,p,R){wash(x,w,h,p);
   x.font="800 "+(ch*.2)+"px 'Nunito',sans-serif";
   x.fillStyle="#c74e74";x.fillText("mixtape ’09",cx-ch*.36,cy-ch*.14);
   x.strokeStyle="rgba(255,120,150,.7)";x.lineWidth=2.5;x.lineCap="round";
-  const hx=w*.16,hy=h*.24;
+  const hx=w*.16,hy=h*.22;
   x.beginPath();x.moveTo(hx,hy+8);x.bezierCurveTo(hx-10,hy-2,hx-5,hy-9,hx,hy-3);
-  x.bezierCurveTo(hx+5,hy-9,hx+10,hy-2,hx,hy+8);x.stroke()},
+  x.bezierCurveTo(hx+5,hy-9,hx+10,hy-2,hx,hy+8);x.stroke();
+  if(g&&g.variant){x.textAlign="center";
+    x.font="400 "+(h*.13)+"px 'Lilita One','Arial Black',sans-serif";
+    x.fillStyle="#ffe3ee";
+    x.strokeStyle="rgba(120,30,70,.8)";x.lineWidth=4;
+    const lbl=g.variant==="flip"?"THE FLIPSIDE":"RE-UP";
+    x.strokeText(lbl,w*.5,h*.92);
+    x.fillText(lbl,w*.5,h*.92)}},
 cookie(x,w,h,p,R){wash(x,w,h,p);
   const cx=w*.44,cy=h*.52,r=h*.3;
   x.strokeStyle="rgba(255,255,255,.3)";x.lineWidth=2;x.setLineDash([5,8]);
@@ -1855,6 +2116,20 @@ baldi(x,w,h,p,R,g){
       R()<.5?x.fillRect(-s2/2,-s2/4,s2,s2/2):x.fillRect(-s2/4,-s2/2,s2/2,s2);x.restore();
     }
   }
+  if(g&&g.variant==="burger"){
+    const bx=w*.15,by=h*.17,bs=h*.075;
+    x.fillStyle="#e8a34c";
+    x.beginPath();x.arc(bx,by,bs,Math.PI,0);x.closePath();x.fill();
+    x.fillStyle="#7fb84a";
+    for(let i=0;i<4;i++){x.beginPath();x.arc(bx-bs+i*bs*.66,by+2,bs*.3,0,7);x.fill()}
+    x.fillStyle="#6e3a22";rr(x,bx-bs,by+bs*.28,bs*2,bs*.4,3);x.fill();
+    x.fillStyle="#e8a34c";rr(x,bx-bs,by+bs*.68,bs*2,bs*.3,3);x.fill();
+    x.strokeStyle="rgba(80,40,10,.5)";x.lineWidth=1.5;
+    x.beginPath();x.arc(bx,by,bs,Math.PI,0);x.stroke();
+    x.textAlign="center";x.font="800 "+(h*.06)+"px 'Nunito',sans-serif";
+    x.fillStyle="rgba(255,220,150,.85)";
+    x.fillText("FAST FOOD",bx,by+bs*1.35);
+  }
   const cx=w*.5,cy=h*.5,r=h*.21;
   x.save();x.translate(cx+r*1.35,cy+r*1.45);x.rotate(-.35);
   x.fillStyle="#d9b47e";rr(x,-r*.16,-r*1.7,r*.32,r*3.4,3);x.fill();
@@ -2424,7 +2699,7 @@ function renderSug(){
     if(r>=0)scored.push([r,g]);
   });
   scored.sort((a,b)=>a[0]-b[0]||azCompare(a[1],b[1]));
-  sugItems=scored.slice(0,8).map(s=>s[1]);
+  sugItems=scored.slice(0,4).map(s=>s[1]);
   if(!sugItems.length){
     sug.innerHTML='<div class="sg-none">Nothing swimming under “'+searchInput.value.trim()+'” — try another current.</div>';
     sug.hidden=false;sugIdx=-1;return;
@@ -2513,7 +2788,8 @@ function openPlayer(g){
   const wb=$("#pWarn");
   if(g.warn){wb.hidden=false;wb.textContent=g.warn}else wb.hidden=true;
   const pf=$("#pFav");pf.dataset.fav=g.id;
-  pf.classList.toggle("on",state.favs.has(g.id));
+  pf.classList.toggle("on",!!(g.id&&state.favs.has(g.id)));
+  $("#pFav").style.display=g.id?"":"none";
   $("#newTab").href=g.url;
   loader.classList.remove("hide","slow");
   $("#loadName").textContent=g.title;
@@ -2560,7 +2836,6 @@ function toast(msg){
 /* ================= cloak & settings ================= */
 const DEFAULT_TITLE="Jakob-52 — Dive Into Free Games";
 const TITLE_PRESETS=["Google Classroom","Google Docs","Google Drive","Inbox — Gmail","Home"];
-/* the drawn anchor stays as the site's own face */
 function drawAnchorIcon(){
   const c=document.createElement("canvas");c.width=c.height=64;
   const g=c.getContext("2d");
@@ -2573,7 +2848,6 @@ function drawAnchorIcon(){
   return c.toDataURL("image/png");
 }
 const DEFAULT_ICON=drawAnchorIcon();
-/* real favicons, hotlinked from their official hosts */
 const ICONS={
   google:{label:"Google",url:"https://www.google.com/favicon.ico"},
   docs:{label:"Google Docs",url:"https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico"},
@@ -2650,7 +2924,8 @@ function pageSource(){
   const wm=clone.querySelector("#wordmark");if(wm)wm.textContent="";
   const gf=clone.querySelector("#gameFrame");if(gf)gf.remove();
   const pl=clone.querySelector("#player");if(pl)pl.classList.remove("open");
-  const ov=clone.querySelector("#setOverlay");if(ov)ov.classList.remove("open");
+  ["#setOverlay","#appsOverlay"].forEach(sel=>{
+    const ov=clone.querySelector(sel);if(ov)ov.classList.remove("open")});
   const tt=clone.querySelector("#toasts");if(tt)tt.innerHTML="";
   const sg=clone.querySelector("#suggest");if(sg){sg.innerHTML="";sg.hidden=true}
   const bd=clone.querySelector("body");if(bd)bd.removeAttribute("style");
@@ -2679,6 +2954,9 @@ function pageSource(){
   state.q="";searchInput.value="";renderChips();renderGrid();hideSug()});
  $("#diveBtn").addEventListener("click",()=>$("#reef").scrollIntoView({behavior:"smooth"}));
 addEventListener("keydown",e=>{
+  if(appsOverlay.classList.contains("open")){
+    if(e.key==="Escape")appsOverlay.classList.remove("open");
+    return}
   if(setOverlay.classList.contains("open")){
     if(e.key==="Escape")setOverlay.classList.remove("open");
     return}
